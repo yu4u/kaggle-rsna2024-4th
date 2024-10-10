@@ -1,0 +1,68 @@
+task:  # task specific config
+  img_size: 224
+  in_channels: 1
+  layer_num: 2
+  depth: 16
+  debug: false
+  seed: 42
+  dirname: axial_dataset
+
+model:
+  arch: 2d
+  backbone: "tf_efficientnetv2_s.in21k_ft_in1k"
+  resume_path: null
+  ema: false
+  ema_decay: 0.999
+  ema_update_after_step: 0
+  swa: false
+  freeze_backbone: false
+  freeze_end_epoch: 16
+  drop_path_rate: 0.0
+  drop_rate: 0.0
+  attn_drop_rate: 0.0
+
+data:
+  fold_num: 5
+  fold_id: 0
+  num_workers: 0
+  batch_size: 2
+  train_all: false
+
+trainer:
+  max_epochs: 32
+  devices: "auto"  # list or str, -1 to indicate all available devices
+  strategy: "auto"  # ddp
+  check_val_every_n_epoch: 1
+  sync_batchnorm: false
+  accelerator: "cpu"  # cpu, gpu, tpu, ipu, hpu, mps, auto
+  precision: 32  # 16, 32, 64, bf16
+  gradient_clip_val: null
+  accumulate_grad_batches: 1
+  deterministic: true
+
+test:
+  target: "axial"  # axial, sagittal1, sagittal2
+  mode: test  # test or val
+  output_dir: preds_results
+  tta: false
+
+opt:
+  opt: "AdamW"  # SGD, Adam, AdamW...
+  lr: 1e-4
+  weight_decay: 0.01
+
+scheduler:
+  sched: "cosine"
+  min_lr: 0.0
+  warmup_epochs: 0
+
+loss:
+  name: "bce"  # bce, focal
+  alpha: 0.25
+  mixup: 0.0
+  cutmix: 0.0
+
+wandb:
+  project: rsna2024-axial
+  name: null
+  fast_dev_run: false
