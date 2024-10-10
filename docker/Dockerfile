@@ -39,6 +39,4 @@ RUN curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-instal
 COPY requirements.txt /tmp
 RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 RUN pip install -r /tmp/requirements.txt
-
-RUN mim install opencv-full==1.7.0
-RUN mim install mmaction2==0.24.1
+RUN pip install -U timm==1.0.9

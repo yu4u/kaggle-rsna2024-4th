@@ -19,3 +19,5 @@ ttach
 pydicom
 openmim
 segmentation_models_pytorch
+lightgbm
+xgboost
