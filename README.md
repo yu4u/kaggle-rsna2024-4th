@@ -19,6 +19,7 @@ The overall solution is described in [this discussion](https://www.kaggle.com/co
 - Login to wandb:
     ```shell
     wandb login
+    ```
 
 
 ## Training Process
