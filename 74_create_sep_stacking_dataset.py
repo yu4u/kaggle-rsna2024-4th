@@ -135,6 +135,32 @@ def main():
 
         df.to_csv(f"stacking_features_{condition}.csv", index=False)
 
+    if mode == "val":
+        # only for val
+        train_df = pd.read_csv("input/train.csv", index_col=0)
+        gts = []
+
+        def str_to_class_id(s):
+            if s == "Normal/Mild":
+                return 0
+            elif s == "Moderate":
+                return 1
+            elif s == "Severe":
+                return 2
+            elif np.isnan(s):
+                return -100
+            else:
+                raise ValueError(f"Invalid class: {s}")
+
+        for study_id in series_df["study_id"].unique():
+            for level in levels:
+                columns = [f"{condition}_{level}" for condition in conditions]
+                gt = train_df.loc[study_id, columns].values
+                gts.append([str_to_class_id(s) for s in gt])
+
+        gt_df = pd.DataFrame(gts, columns=conditions)
+        gt_df.to_csv("stacking_gt.csv", index=False)
+
 
 if __name__ == '__main__':
     main()
